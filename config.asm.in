@@ -1,0 +1,9 @@
+#cmakedefine STACK_ALIGNMENT @STACK_ALIGNMENT@
+#cmakedefine01 ARCH_X86_64
+#cmakedefine01 ARCH_X86_32
+#cmakedefine01 PIC
+#cmakedefine01 UNDERSCORE_PREFIXED
+#if UNDERSCORE_PREFIXED
+#define PREFIX UNDERSCORE_PREFIXED
+#endif
+#cmakedefine01 HAVE_AVX512ICL

@@ -1,0 +1,3 @@
+[submodule "david"]
+	path = david
+	url = https://github.com/videolan/dav1d
