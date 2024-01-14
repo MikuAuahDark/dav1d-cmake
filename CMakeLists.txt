@@ -121,7 +121,7 @@ if(WIN32)
     endif()
 
     if (${PROCESSOR} STREQUAL "x86_64" AND ${CMAKE_C_COMPILER_ID} STREQUAL "GNU")
-        list(APPEND TEMP_COMPILE_FLAGS -mcmodel=small)
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mcmodel=small")
     endif()
 
     # On Windows, we use a compatibility layer to emulate pthread
@@ -233,7 +233,7 @@ include(CheckCCompilerFlag)
 if(NOT MSVC)
     check_c_compiler_flag("-fvisibility=hidden" HAS_VISIBILITY_HIDDEN)
     if(HAS_VISIBILITY_HIDDEN)
-        list(APPEND TEMP_COMPILE_FLAGS -fvisibility=hidden)
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden")
     else()
         message(WARNING "Compiler does not support -fvisibility=hidden, all symbols will be public!")
     endif()
@@ -281,7 +281,7 @@ endif()
 foreach(FLAG IN LISTS OPTIONAL_FLAGS)
     check_c_compiler_flag(${FLAG} _COMPILE_FLAG_${FLAG})
     if(_COMPILE_FLAG_${FLAG})
-        list(APPEND TEMP_COMPILE_FLAGS ${FLAG})
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAG}")
     endif()
 endforeach()
 
@@ -613,6 +613,8 @@ if(HAVE_ASM)
     endif()
 endif()
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${TEMP_COMPILE_FLAGS}")
+
 #
 # Windows .rc file and API export flags
 #
@@ -678,7 +680,7 @@ foreach(BITS IN LISTS bitdepths)
         add_library(dav1d_arch_bitdepth_${BITS} STATIC ${LIBDAV1D_ARCH_TMPL_SOURCES})
         target_include_directories(dav1d_arch_bitdepth_${BITS} PRIVATE ${LIBDAV1D_INCLUDE_DIRS_PRIV})
         target_include_directories(dav1d_arch_bitdepth_${BITS} PUBLIC ${LIBDAV1D_INCLUDE_DIRS})
-        target_compile_options(dav1d_arch_bitdepth_${BITS} PRIVATE ${TEMP_COMPILE_FLAGS} ${ARCH_SPECIFIC_FLAGS})
+        target_compile_options(dav1d_arch_bitdepth_${BITS} PRIVATE ${TEMP_COMPILE_FLAGS})
         target_compile_definitions(dav1d_arch_bitdepth_${BITS} PRIVATE ${TEMP_COMPILE_DEFS} BITDEPTH=${BITS})
         target_link_libraries(dav1d dav1d_arch_bitdepth_${BITS})
 
