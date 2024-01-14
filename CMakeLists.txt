@@ -686,7 +686,7 @@ foreach(BITS IN LISTS bitdepths)
 endforeach()
 
 if(TEMP_LINK_LIBRARIES)
-    target_link_directories(dav1d ${TEMP_LINK_LIBRARIES})
+    target_link_directories(dav1d PUBLIC ${TEMP_LINK_LIBRARIES})
 endif()
 
 if(THREAD_DEPENDENCY)
