@@ -339,6 +339,10 @@ if(ARCH_X86)
             endif()
         endif()
     endif()
+    
+    # Stack alignment flags are for the C compiler only
+    # (and not for NASM, which does not support them).
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${STACKALIGN_FLAG} ${STACKREALIGN_FLAG}")
 endif()
 
 if(${PROCESSOR} STREQUAL "aarch64")
@@ -641,7 +645,6 @@ set(LIBDAV1D_INCLUDE_DIRS
 add_library(dav1d ${TEMP_COMPAT_FILES} ${LIBDAV1D_SOURCES} ${LIBDAV1D_SOURCES_ASM} ${LIBDAV1D_ENTRYPOINT_SOURCES})
 target_include_directories(dav1d PRIVATE ${LIBDAV1D_INCLUDE_DIRS_PRIV})
 target_include_directories(dav1d PUBLIC ${LIBDAV1D_INCLUDE_DIRS})
-target_compile_options(dav1d PRIVATE ${STACKALIGN_FLAG} ${STACKREALIGN_FLAG})
 target_compile_definitions(dav1d PRIVATE ${TEMP_COMPILE_DEFS} ${API_EXPORT_DEFS})
 
 if(STACKREALIGN_FLAG)
@@ -663,7 +666,7 @@ foreach(BITS IN LISTS bitdepths)
     add_library(dav1d_bitdepth_${BITS} STATIC ${LIBDAV1D_TMPL_SOURCES})
     target_include_directories(dav1d_bitdepth_${BITS} PRIVATE ${LIBDAV1D_INCLUDE_DIRS_PRIV})
     target_include_directories(dav1d_bitdepth_${BITS} PUBLIC ${LIBDAV1D_INCLUDE_DIRS})
-    target_compile_options(dav1d_bitdepth_${BITS} PRIVATE ${TEMP_COMPILE_FLAGS} ${STACKALIGN_FLAG})
+    target_compile_options(dav1d_bitdepth_${BITS} PRIVATE ${TEMP_COMPILE_FLAGS})
     target_compile_definitions(dav1d_bitdepth_${BITS} PRIVATE ${TEMP_COMPILE_DEFS} BITDEPTH=${BITS})
     target_link_libraries(dav1d dav1d_bitdepth_${BITS})
 
@@ -675,7 +678,7 @@ foreach(BITS IN LISTS bitdepths)
         add_library(dav1d_arch_bitdepth_${BITS} STATIC ${LIBDAV1D_ARCH_TMPL_SOURCES})
         target_include_directories(dav1d_arch_bitdepth_${BITS} PRIVATE ${LIBDAV1D_INCLUDE_DIRS_PRIV})
         target_include_directories(dav1d_arch_bitdepth_${BITS} PUBLIC ${LIBDAV1D_INCLUDE_DIRS})
-        target_compile_options(dav1d_arch_bitdepth_${BITS} PRIVATE ${TEMP_COMPILE_FLAGS} ${STACKALIGN_FLAG} ${ARCH_SPECIFIC_FLAGS})
+        target_compile_options(dav1d_arch_bitdepth_${BITS} PRIVATE ${TEMP_COMPILE_FLAGS} ${ARCH_SPECIFIC_FLAGS})
         target_compile_definitions(dav1d_arch_bitdepth_${BITS} PRIVATE ${TEMP_COMPILE_DEFS} BITDEPTH=${BITS})
         target_link_libraries(dav1d dav1d_arch_bitdepth_${BITS})
 
