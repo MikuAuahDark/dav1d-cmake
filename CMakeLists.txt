@@ -635,6 +635,8 @@ set(LIBDAV1D_INCLUDE_DIRS_PRIV
 set(LIBDAV1D_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/dav1d/include
     ${CMAKE_CURRENT_BINARY_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/dav1d/include/dav1d
+    ${CMAKE_CURRENT_BINARY_DIR}/include/dav1d
 )
 
 # The final dav1d library
