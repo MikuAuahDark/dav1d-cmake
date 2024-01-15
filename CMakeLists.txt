@@ -649,7 +649,7 @@ if(STACKREALIGN_FLAG)
 endif()
 
 if(NOT WIN32)
-    set_target_properties(dav1d SOVERSION "${DAV1D_API_VERSION_MAJOR}")
+    set_target_properties(dav1d PROPERTIES SOVERSION "${DAV1D_API_VERSION_MAJOR}")
 else()
     set_target_properties(dav1d PROPERTIES PREFIX "lib")
 endif()
@@ -686,7 +686,7 @@ foreach(BITS IN LISTS bitdepths)
 endforeach()
 
 if(TEMP_LINK_LIBRARIES)
-    target_link_directories(dav1d ${TEMP_LINK_LIBRARIES})
+    target_link_directories(dav1d PUBLIC ${TEMP_LINK_LIBRARIES})
 endif()
 
 if(THREAD_DEPENDENCY)
