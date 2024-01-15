@@ -23,3 +23,6 @@ add_executable(your_own_project ...)
 target_link_libraries(your_own_project dav1d::dav1d)
 ```
 
+## License
+
+BSD 2-clause License.
